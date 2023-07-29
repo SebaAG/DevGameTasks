@@ -11,4 +11,6 @@ public interface DeveloperService {
     Developer addDeveloper(Developer developer);
     List<DeveloperDTO> getAllDevelopers();
     Developer assignDeveloperToGame(UUID developerId, UUID gameId);
+
+    List<DeveloperDTO> getDevelopersByGameId(UUID gameId);
 }

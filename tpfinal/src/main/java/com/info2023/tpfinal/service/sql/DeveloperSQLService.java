@@ -45,4 +45,16 @@ public class DeveloperSQLService implements DeveloperService {
         }
         return null;
     }
+
+    @Override
+    public List<DeveloperDTO> getDevelopersByGameId(UUID gameId) {
+        List<Developer> developers = developerRepository.findByGameUuid(gameId);
+        return developers.stream()
+                .map(developer -> new DeveloperDTO(
+                        developer.getUuid(),
+                        developer.getName(),
+                        developer.getEmail(),
+                        developer.getRole()))
+                .collect(Collectors.toList());
+    }
 }

@@ -3,7 +3,6 @@ package com.info2023.tpfinal.controller;
 import com.info2023.tpfinal.entity.Developer;
 import com.info2023.tpfinal.model.dto.DeveloperDTO;
 import com.info2023.tpfinal.service.DeveloperService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ public class DeveloperController {
 
     private final DeveloperService developerService;
 
-    @Autowired
     public DeveloperController(DeveloperService developerService) {
         this.developerService = developerService;
     }
@@ -39,6 +37,15 @@ public class DeveloperController {
         Developer assignedDeveloper = developerService.assignDeveloperToGame(developerId, gameId);
         if (assignedDeveloper != null) {
             return ResponseEntity.ok(assignedDeveloper);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{gameId}/game")
+    public ResponseEntity<List<DeveloperDTO>> getDeveloperByGameId(@PathVariable UUID gameId) {
+        List<DeveloperDTO> developers = developerService.getDevelopersByGameId(gameId);
+        if (!developers.isEmpty()) {
+            return ResponseEntity.ok(developers);
         }
         return ResponseEntity.notFound().build();
     }

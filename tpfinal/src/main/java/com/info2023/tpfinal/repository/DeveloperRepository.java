@@ -14,4 +14,6 @@ public interface DeveloperRepository extends CrudRepository<Developer, UUID> {
     List<Developer> findAll();
 
     Optional<Developer> findById(UUID uuid);
+
+    List<Developer> findByGameUuid(UUID uuid);
 }

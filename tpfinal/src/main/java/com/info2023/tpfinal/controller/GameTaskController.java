@@ -2,7 +2,6 @@ package com.info2023.tpfinal.controller;
 
 import com.info2023.tpfinal.entity.GameTask;
 import com.info2023.tpfinal.service.GameTaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class GameTaskController {
 
     private final GameTaskService gameTaskService;
 
-    @Autowired
     public GameTaskController(GameTaskService taskService) {
         this.gameTaskService = taskService;
     }

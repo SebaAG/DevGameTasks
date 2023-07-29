@@ -7,8 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -41,10 +39,6 @@ public class Developer {
     @JoinColumn(name = "game_id")
     @JsonIgnore
     private Game game;
-
-    @OneToMany(mappedBy = "developer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<GameTask> tasks = new ArrayList<>();
-
 
     public enum Role {
         DEV("DEV"),
