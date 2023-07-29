@@ -1,0 +1,6 @@
+name,email,role
+Developer 1,developer1@example.com,DEV
+Developer 2,developer2@example.com,QA
+Developer 3,developer3@example.com,DEV_OPS
+Developer 4,developer4@example.com,DEV_OPS
+Developer 5,developer5@example.com,QA
