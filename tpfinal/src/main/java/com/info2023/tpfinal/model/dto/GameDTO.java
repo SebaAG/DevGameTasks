@@ -1,5 +1,6 @@
 package com.info2023.tpfinal.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,7 @@ public class GameDTO {
     private UUID uuid;
     private String title;
     private String description;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate releaseDate;
 }

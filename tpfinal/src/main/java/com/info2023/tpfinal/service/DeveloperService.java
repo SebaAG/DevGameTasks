@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface DeveloperService {
 
-    Developer addDeveloper(Developer developer);
+    DeveloperDTO addDeveloper(DeveloperDTO developerDTO);
     List<DeveloperDTO> getAllDevelopers();
     Developer assignDeveloperToGame(UUID developerId, UUID gameId);
 

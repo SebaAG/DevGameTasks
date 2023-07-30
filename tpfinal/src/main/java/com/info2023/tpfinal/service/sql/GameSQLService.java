@@ -18,28 +18,30 @@ public class GameSQLService implements GameService {
     private final GameRepository gameRepository;
 
     @Override
-    public GameDTO addGame(GameDTO game) {
-        return gameRepository.save(game); // SEGUIR ACA HOY !!!
+    public GameDTO addGame(GameDTO gameDto) {
+        Game game = toEntity(gameDto);
+        Game savedGame = gameRepository.save(game);
+        return toDTO(savedGame);
     }
 
     public List<GameDTO> getAllGames() {
         List<Game> games = (List<Game>) gameRepository.findAll();
-        return toDTO(games);
+        return toDTOList(games);
     }
 
     @Override
     public List<GameDTO> getGamesUnderDevelopment() {
         List<Game> games = gameRepository.findByReleaseDateAfter(LocalDate.now());
-        return toDTO(games);
+        return toDTOList(games);
     }
 
     @Override
     public List<GameDTO> getFinishedGames() {
         List<Game> games = gameRepository.findByReleaseDateBefore(LocalDate.now());
-        return toDTO(games);
+        return toDTOList(games);
     }
 
-    private List<GameDTO> toDTO(List<Game> games) {
+    private List<GameDTO> toDTOList(List<Game> games) {
         List<GameDTO> gameDTOs = new ArrayList<>();
         for (Game game : games) {
             GameDTO gameDTO = new GameDTO();
@@ -50,6 +52,21 @@ public class GameSQLService implements GameService {
             gameDTOs.add(gameDTO);
         }
         return gameDTOs;
+    }
+
+    private Game toEntity(GameDTO gameDto) {
+        return Game.builder()
+                .title(gameDto.getTitle())
+                .description(gameDto.getDescription())
+                .releaseDate(gameDto.getReleaseDate())
+                .build();
+    }
+
+    private GameDTO toDTO(Game game) {
+        return new GameDTO(game.getUuid(),
+                game.getTitle(),
+                game.getDescription(),
+                game.getReleaseDate());
     }
 
 }

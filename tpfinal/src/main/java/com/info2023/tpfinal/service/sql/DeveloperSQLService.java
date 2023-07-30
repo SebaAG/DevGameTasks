@@ -21,16 +21,22 @@ public class DeveloperSQLService implements DeveloperService {
     private GameRepository gameRepository;
 
     @Override
-    public Developer addDeveloper(Developer developer) {
-        return developerRepository.save(developer);
+    public DeveloperDTO addDeveloper(DeveloperDTO developerDTO) {
+        Developer developer = new Developer();
+        developer.setName(developerDTO.getName());
+        developer.setEmail(developerDTO.getEmail());
+        developer.setRole(developerDTO.getRole());
+
+        Developer addedDeveloper = developerRepository.save(developer);
+
+        return toDTO(addedDeveloper);
     }
 
     @Override
     public List<DeveloperDTO> getAllDevelopers() {
         List<Developer> developers = developerRepository.findAll();
         return developers.stream()
-                .map(developer -> new DeveloperDTO(developer.getUuid(), developer.getName(), developer.getEmail(),
-                        developer.getRole()))
+                .map(this::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -50,11 +56,16 @@ public class DeveloperSQLService implements DeveloperService {
     public List<DeveloperDTO> getDevelopersByGameId(UUID gameId) {
         List<Developer> developers = developerRepository.findByGameUuid(gameId);
         return developers.stream()
-                .map(developer -> new DeveloperDTO(
-                        developer.getUuid(),
-                        developer.getName(),
-                        developer.getEmail(),
-                        developer.getRole()))
+                .map(this::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    private DeveloperDTO toDTO(Developer developer) {
+        return new DeveloperDTO(
+                developer.getUuid(),
+                developer.getName(),
+                developer.getEmail(),
+                developer.getRole()
+        );
     }
 }

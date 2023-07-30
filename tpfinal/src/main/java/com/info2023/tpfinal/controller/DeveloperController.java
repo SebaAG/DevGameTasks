@@ -21,9 +21,12 @@ public class DeveloperController {
     }
 
     @PostMapping
-    public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-        Developer newDeveloper = developerService.addDeveloper(developer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newDeveloper);
+    public ResponseEntity<DeveloperDTO> addDeveloper(@RequestBody DeveloperDTO developerDTO) {
+        DeveloperDTO addDeveloper = developerService.addDeveloper(developerDTO);
+        if (addDeveloper != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(addDeveloper);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @GetMapping
