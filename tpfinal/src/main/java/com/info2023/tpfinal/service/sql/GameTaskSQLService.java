@@ -3,6 +3,7 @@ package com.info2023.tpfinal.service.sql;
 import com.info2023.tpfinal.entity.Developer;
 import com.info2023.tpfinal.entity.Game;
 import com.info2023.tpfinal.entity.GameTask;
+import com.info2023.tpfinal.model.dto.GameTaskDTO;
 import com.info2023.tpfinal.repository.DeveloperRepository;
 import com.info2023.tpfinal.repository.GameRepository;
 import com.info2023.tpfinal.repository.GameTaskRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -22,6 +24,14 @@ public class GameTaskSQLService implements GameTaskService {
     private final GameTaskRepository gameTaskRepository;
     private final DeveloperRepository developerRepository;
     private final GameRepository gameRepository;
+
+    @Override
+    public List<GameTaskDTO> getAllGamesTask() {
+        List<GameTask> gameTasks = gameTaskRepository.findAll();
+        return gameTasks.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public GameTask assignTaskToDeveloper(UUID taskId, UUID developerId, String taskDescription, LocalDate taskDeadline) {
@@ -85,5 +95,14 @@ public class GameTaskSQLService implements GameTaskService {
     @Override
     public List<GameTask> searchTasksPastDeadline() {
         return gameTaskRepository.findByDeadlineBefore(LocalDate.now());
+    }
+
+    private GameTaskDTO toDTO(GameTask gameTask) {
+        return new GameTaskDTO(
+                gameTask.getUuid(),
+                gameTask.getDescription(),
+                gameTask.getDeadline(),
+                gameTask.getStatus()
+        );
     }
 }

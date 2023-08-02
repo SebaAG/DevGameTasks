@@ -12,6 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface GameTaskRepository extends CrudRepository<GameTask, UUID> {
+
+    List<GameTask> findAll();
     List<GameTask> findByDeveloper(Developer developer);
     List<GameTask> findByGame(Game game);
     List<GameTask> findByStatus(GameTask.StatusTask status);

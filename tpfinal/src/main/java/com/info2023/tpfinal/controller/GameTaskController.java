@@ -21,6 +21,12 @@ public class GameTaskController {
         this.gameTaskService = taskService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<GameTaskDTO>> getAllGamesTask() {
+        List<GameTaskDTO> tasks = gameTaskService.getAllGamesTask();
+        return ResponseEntity.ok(tasks);
+    }
+
     @PostMapping("/{taskId}/assign-to-developer/{developerId}")
     public ResponseEntity<GameTask> assignTaskToDeveloper(
             @PathVariable UUID taskId,

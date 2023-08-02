@@ -1,7 +1,6 @@
 package com.info2023.tpfinal.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.info2023.tpfinal.entity.GameTask;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class GameTaskDTO {
 
-    @JsonIgnore
     private UUID uuid;
 
     @NotNull
@@ -30,5 +28,6 @@ public class GameTaskDTO {
     @NotNull
     private LocalDate deadline;
 
+    @NotNull
     private GameTask.StatusTask status;
 }

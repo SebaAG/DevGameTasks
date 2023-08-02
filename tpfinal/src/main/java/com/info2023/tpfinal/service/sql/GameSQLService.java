@@ -24,6 +24,7 @@ public class GameSQLService implements GameService {
         return toDTO(savedGame);
     }
 
+    @Override
     public List<GameDTO> getAllGames() {
         List<Game> games = (List<Game>) gameRepository.findAll();
         return toDTOList(games);
