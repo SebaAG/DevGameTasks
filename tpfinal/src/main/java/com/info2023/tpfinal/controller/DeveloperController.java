@@ -3,6 +3,7 @@ package com.info2023.tpfinal.controller;
 import com.info2023.tpfinal.entity.Developer;
 import com.info2023.tpfinal.model.dto.DeveloperDTO;
 import com.info2023.tpfinal.service.DeveloperService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class DeveloperController {
     }
 
     @PostMapping
-    public ResponseEntity<DeveloperDTO> addDeveloper(@RequestBody DeveloperDTO developerDTO) {
+    public ResponseEntity<DeveloperDTO> addDeveloper(@RequestBody @Valid DeveloperDTO developerDTO) {
         DeveloperDTO addDeveloper = developerService.addDeveloper(developerDTO);
         if (addDeveloper != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(addDeveloper);

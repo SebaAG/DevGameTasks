@@ -1,8 +1,8 @@
 package com.info2023.tpfinal.controller;
 
-import com.info2023.tpfinal.entity.Game;
 import com.info2023.tpfinal.model.dto.GameDTO;
 import com.info2023.tpfinal.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<GameDTO> addGame(@RequestBody GameDTO game) {
+    public ResponseEntity<GameDTO> addGame(@RequestBody @Valid GameDTO game) {
         GameDTO newGame = gameService.addGame(game);
         return ResponseEntity.status(HttpStatus.CREATED).body(newGame);
     }

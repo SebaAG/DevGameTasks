@@ -1,7 +1,10 @@
 package com.info2023.tpfinal.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.info2023.tpfinal.entity.Developer;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,16 +19,17 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DeveloperDTO {
 
-    @JsonIgnore
     private UUID uuid;
+
+    @NotEmpty
+    @Size(min = 2, max = 50)
     private String name;
+
+    @NotEmpty
+    @Email(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
     private String email;
+
+    @NotNull
     private Developer.Role role;
 
-    // Constructor sin UUID
-    public DeveloperDTO(String name, String email, Developer.Role role) {
-        this.name = name;
-        this.email = email;
-        this.role = role;
-    }
 }

@@ -1,7 +1,9 @@
 package com.info2023.tpfinal.controller;
 
 import com.info2023.tpfinal.entity.GameTask;
+import com.info2023.tpfinal.model.dto.GameTaskDTO;
 import com.info2023.tpfinal.service.GameTaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +21,13 @@ public class GameTaskController {
         this.gameTaskService = taskService;
     }
 
-
     @PostMapping("/{taskId}/assign-to-developer/{developerId}")
-    public ResponseEntity<GameTask> assignTaskToDeveloper(@PathVariable UUID taskId, @PathVariable UUID developerId) {
-        GameTask assignedTask = gameTaskService.assignTaskToDeveloper(taskId, developerId);
+    public ResponseEntity<GameTask> assignTaskToDeveloper(
+            @PathVariable UUID taskId,
+            @PathVariable UUID developerId,
+            @RequestBody @Valid GameTaskDTO taskDTO
+    ) {
+        GameTask assignedTask = gameTaskService.assignTaskToDeveloper(taskId, developerId, taskDTO.getDescription(), taskDTO.getDeadline());
         if (assignedTask != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(assignedTask);
         }

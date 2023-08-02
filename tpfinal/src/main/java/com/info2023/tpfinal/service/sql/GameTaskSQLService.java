@@ -24,12 +24,14 @@ public class GameTaskSQLService implements GameTaskService {
     private final GameRepository gameRepository;
 
     @Override
-    public GameTask assignTaskToDeveloper(UUID taskId, UUID developerId) {
+    public GameTask assignTaskToDeveloper(UUID taskId, UUID developerId, String taskDescription, LocalDate taskDeadline) {
         GameTask task = gameTaskRepository.findById(taskId).orElse(null);
         Developer developer = developerRepository.findById(developerId).orElse(null);
 
         if (task != null && developer != null) {
             task.setDeveloper(developer);
+            task.setDescription(taskDescription);
+            task.setDeadline(taskDeadline);
             return gameTaskRepository.save(task);
         }
         return null;
